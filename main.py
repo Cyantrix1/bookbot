@@ -1,25 +1,33 @@
+from stats import countWords
+from stats import countWordsDict
+import sys
+
+
+
 def main():
-    with open("books/frankenstein.txt") as f:
-        file_contents = f.read()   
+    if (len(sys.argv) != 2):
+        print("Usage: python3 main.py <path_to_book>")
+        sys.exit(1)
+
     
-    countCharacters(file_contents)
+    path = sys.argv[1]
+    book = get_book_test(path)
+    
+    numberofWords = (countWords(book))
+    print("============ BOOKBOT ============")
+    print(f"Analyzing book found at {path}")
+    print("----------- Word Count ----------")
+    print(f"Found {numberofWords} total words")
+    print("--------- Character Count -------")
+    countWordsDict(book)
+    #countCharacters(file_contents)
 
 
 
-def countCharacters(word):
-    
-    dict = {}
-    lowerWord = word.lower()
-    for letter in lowerWord:
-        if letter in dict:
-            dict[letter] += 1
-        else:
-            dict[letter] = 1
-    
-    for char in dict:
-        if(char.isalpha()):
-            print("The '" + char + f"' character was found {dict[char]} times!")
-        else:
-           pass
-    
+def get_book_test(filePath):
+    with open(filePath) as f:
+        file_contents=f.read()
+    return file_contents
+
+
 main()
